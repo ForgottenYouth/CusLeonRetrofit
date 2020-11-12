@@ -6,7 +6,10 @@
 
 package com.leon.leonretrofit.retrofit.reqparamhandler;
 
-public interface ParamHandler {
+import com.leon.leonretrofit.retrofit.annotation.ApiMethodAnnotations;
 
-    public void apply(String key ,String value);
+public abstract class ParamHandler {
+
+    protected String key;
+    public  abstract void apply(ApiMethodAnnotations method , String value);
 }

@@ -5,16 +5,17 @@
  */
 package com.leon.leonretrofit.retrofit.reqparamhandler;
 
-public class FieldParamHandler implements ParamHandler {
+import com.leon.leonretrofit.retrofit.annotation.ApiMethodAnnotations;
 
-    public String key;
+public class FieldParamHandler extends ParamHandler {
+
 
     public FieldParamHandler(String key){
         this.key = key;
     }
 
     @Override
-    public void apply(String key, String value) {
-
+    public void apply(ApiMethodAnnotations method, String value) {
+        method.addFieldParameter(key,value);
     }
 }

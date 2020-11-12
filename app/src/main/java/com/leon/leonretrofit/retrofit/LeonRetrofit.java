@@ -22,10 +22,10 @@ import okhttp3.OkHttpClient;
  */
 public class LeonRetrofit {
 
-    HttpUrl baseUrl;
-    private okhttp3.Call.Factory callFactory;
+    public HttpUrl baseUrl;
+    public okhttp3.Call.Factory callFactory;
 
-    public LeonRetrofit(HttpUrl baseUrl, okhttp3.Call.Factory callFactory) {
+    LeonRetrofit(HttpUrl baseUrl, okhttp3.Call.Factory callFactory) {
         this.baseUrl = baseUrl;
         this.callFactory = callFactory;
     }
@@ -41,7 +41,7 @@ public class LeonRetrofit {
                  * TODO 此时应该是解析方法上的所有注解
                  */
                 ApiMethodAnnotations apiMethodAnnotations = loadAnnotationFromMethod(method);
-                return null;
+                return apiMethodAnnotations.invoke(method, args);
             }
         });
     }
@@ -51,12 +51,12 @@ public class LeonRetrofit {
      * TODO 解析方法上的注解
      */
     private ApiMethodAnnotations loadAnnotationFromMethod(Method method) {
-        ApiMethodAnnotations build = new ApiMethodAnnotations.Builder(method).build();
+        ApiMethodAnnotations build = new ApiMethodAnnotations.Builder(method, this).build();
         return build;
     }
 
 
-    public static class Builder {
+    public static final class Builder {
 
         HttpUrl baseUrl;
 
@@ -71,7 +71,6 @@ public class LeonRetrofit {
             OkHttpClient okHttpClient = new OkHttpClient();
             return new LeonRetrofit(baseUrl, okHttpClient);
         }
-
     }
 
 }
